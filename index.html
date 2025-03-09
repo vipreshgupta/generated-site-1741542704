@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rail Runner</title>
+    <style>
+        /* Reset and Basic Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Color Scheme */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #f1c40f;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --background-color: #ecf0f1;
+        }
+
+        /* Utility Classes */
+        .container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #c0392b;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1506318164473-2dfd3ede3623?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
+            color: #fff;
+            text-align: center;
+            padding: 100px 0;
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        #hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* About Section */
+        #about {
+            background: var(--background-color);
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        #about h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* Features Section */
+        #features {
+            background: #fff;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        #features h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--background-color);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        /* Gallery Section */
+        #gallery {
+            background: var(--background-color);
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        #gallery h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Blog Section */
+        #blog {
+            background-color: #fff;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        #blog h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .blog-post {
+            background-color: var(--background-color);
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-post img {
+            width: 100%;
+            height: auto;
+        }
+
+        .blog-content {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .blog-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        #contact h2 {
+            margin-bottom: 20px;
+        }
+
+        #contact form {
+            display: grid;
+            gap: 20px;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        #contact input,
+        #contact textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #fff;
+            color: #333;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+                /* Accessibility Enhancements */
+        a, button {
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:focus, button:focus {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .feature-grid, .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            #hero {
+                padding: 60px 0;
+                height: auto;
+            }
+
+            #hero h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <ul>
+                <li><a href="#hero" aria-label="Home">Home</a></li>
+                <li><a href="#about" aria-label="About">About</a></li>
+                <li><a href="#features" aria-label="Features">Features</a></li>
+                <li><a href="#gallery" aria-label="Gallery">Gallery</a></li>
+                <li><a href="#blog" aria-label="Blog">Blog</a></li>
+                <li><a href="#contact" aria-label="Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <div class="container">
+            <h1>Welcome to Rail Runner</h1>
+            <p>Experience the thrill of the endless run!</p>
+            <button class="btn" onclick="window.location.href='#features'" aria-label="Learn More">Learn More</button>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About the Game</h2>
+            <p>Rail Runner is an exciting endless runner game where you navigate through dynamic environments, dodge obstacles, and collect coins. Inspired by the classic Subway Surfers, this game offers a unique and thrilling experience for players of all ages.</p>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Dynamic Environments</h3>
+                    <p>Explore vibrant and ever-changing landscapes.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Power-Ups</h3>
+                    <p>Collect power-ups to enhance your run.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Unique Characters</h3>
+                    <p>Unlock and play with a variety of characters.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Daily Challenges</h3>
+                    <p>Complete daily challenges for rewards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="container">
+            <h2>Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1503435824048-a799a3a84bf7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Game Screenshot 1" role="img" aria-label="Game Screenshot 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Game Screenshot 2" role="img" aria-label="Game Screenshot 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Game Screenshot 3" role="img" aria-label="Game Screenshot 3">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog">
+    <div class="container">
+        <h2>Latest News</h2>
+        <div class="blog-grid">
+            <div class="blog-post">
+                <img src="https://images.unsplash.com/photo-1559657529-808d7f65898c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Blog Post 1">
+                <div class="blog-content">
+                    <h3>New Update Released</h3>
+                    <p>Check out the latest features and improvements in our new update!</p>
+                </div>
+            </div>
+            <div class="blog-post">
+                <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Blog Post 2">
+                <div class="blog-content">
+                    <h3>Community Event</h3>
+                    <p>Join our community event and win exciting prizes!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form action="#" method="post">
+                <input type="text" name="name" placeholder="Your Name" required aria-label="Your Name">
+                <input type="email" name="email" placeholder="Your Email" required aria-label="Your Email">
+                <textarea name="message" placeholder="Your Message" required aria-label="Your Message"></textarea>
+                <button type="submit" class="btn" aria-label="Send Message">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Rail Runner. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
